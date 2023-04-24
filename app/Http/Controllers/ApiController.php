@@ -34,10 +34,4 @@ class ApiController extends Controller
 
         return response()->json($videosPaginator);
     }
-
-    public function test() {
-        $youtubeAPI = new YoutubeAPI();
-
-        return $youtubeAPI->fetchPopularVideosWithCountryIntro($country='nl');
-    }
 }
