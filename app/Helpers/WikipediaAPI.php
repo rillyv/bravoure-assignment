@@ -31,10 +31,9 @@ class WikipediaAPI {
         ]
         ]);
 
-        return $response;
-        // $data = json_decode($response->getBody(), true);
-        // $initialParagraph = current($data['query']['pages'])['extract'];
+        $data = json_decode($response->getBody(), true);
+        $initialParagraph = current($data['query']['pages'])['extract'];
 
-        // return $initialParagraph;
+        return $initialParagraph;
     }
 }

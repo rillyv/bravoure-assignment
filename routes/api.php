@@ -19,3 +19,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/data', 'App\Http\Controllers\ApiController@fetchData');
+Route::get('/test', 'App\Http\Controllers\ApiController@test');

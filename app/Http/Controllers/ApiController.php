@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Helpers\YoutubeAPI;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -18,7 +19,7 @@ class ApiController extends Controller
             $allVideos = $allVideos->filter(fn ($c) => $c['country'] === $country);
         }
 
-        $perPage = 25;
+        $perPage = 50;
         $offset = $request->query('offset', 0);
         $page = $request->query('page', 1);
         $startIndex = ($page - 1) * $perPage + $offset;
@@ -32,5 +33,11 @@ class ApiController extends Controller
         ]);
 
         return response()->json($videosPaginator);
+    }
+
+    public function test() {
+        $youtubeAPI = new YoutubeAPI();
+
+        return $youtubeAPI->fetchPopularVideosWithCountryIntro($country='nl');
     }
 }
