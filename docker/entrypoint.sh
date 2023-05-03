@@ -13,11 +13,21 @@ else
     echo "Using existing .env file"
 fi
 
-php artisan migrate
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-php artisan app:collect-data
+role=${CONTAINER_ROLE:-app}
 
-php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
-exec docker-php-entrypoint "$@"
+if [ "$role" = "app" ]; then
+    php artisan migrate
+    php artisan key:generate
+    php artisan cache:clear
+    php artisan config:clear
+    php artisan route:clear
+    php artisan app:collect-data
+    php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
+    exec docker-php-entrypoint "$@"
+elif [ "$role" = "queue" ]; then
+    echo "Running the queue ... "
+    php /var/www/artisan queue:work --verbose --tries=3 --timeout=180
+elif [ "$role" = "websocket" ]; then
+    echo "Running the websocket server ... "
+    php artisan websockets:serve
+fi
