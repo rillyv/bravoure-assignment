@@ -6,7 +6,7 @@ use GuzzleHttp\Client;
 class WikipediaAPI {
     /**
      * Fetches country intro for a specific country.
-     * Returns the data as a string?/json?.
+     * Returns the data as blank text.
      */
     public function fetchCountryIntro($country) {
         $country_codes = [

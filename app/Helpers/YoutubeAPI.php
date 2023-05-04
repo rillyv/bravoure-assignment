@@ -16,7 +16,7 @@ class YoutubeAPI {
     public function fetchPopularVideosWithCountryIntro($country, $pageToken=null) {
         // Fetches the most popular videos for a specific country.
         $client = new Google_Client();
-        $client->setApplicationName('Youtube API fetch most popular videos');
+        $client->setApplicationName('Fetch most popular youtube videos by country');
         $client->setDeveloperKey(config('services.youtube.api_key'));
         $service = new Google_Service_YouTube($client);
 
@@ -30,7 +30,7 @@ class YoutubeAPI {
         $queryParams['pageToken'] = $pageToken;
         }
 
-        $response = $service->videos->listVideos('snippet,statistics', $queryParams);
+        $response = $service->videos->listVideos('snippet', $queryParams);
 
         // Fetch the country intro from Wikipedia.
         $wikipedia_api = new WikipediaAPI();

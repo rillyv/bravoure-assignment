@@ -5,8 +5,13 @@ if [ ! -f vendor/autoload.php ]; then
     composer install --no-progress --no-interaction
 fi
 
-php artisan key:generate
+echo "Waiting for MySQL to be ready..."
+while ! nc -z database 3306; do
+  sleep 5
+done
+
 php artisan migrate
+php artisan key:generate
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
